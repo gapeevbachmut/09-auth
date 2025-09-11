@@ -14,15 +14,6 @@ const Header = async () => {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
-          {/* <li>
-            <Link href="/sign-in">Login</Link>
-          </li>
-          <li>
-            <Link href="/sign-up">Register</Link>
-          </li> */}
           <AuthNavigation />
           <li>
             <TagsMenu

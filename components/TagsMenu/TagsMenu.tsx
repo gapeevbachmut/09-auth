@@ -3,26 +3,26 @@
 import css from './TagsMenu.module.css';
 import Link from 'next/link';
 import { useState } from 'react';
-// import { useEffect } from 'react';
-// import { getTags } from '@/lib/api';
+import { useEffect } from 'react';
+import { getTags } from '@/lib/api/clientApi';
 import { type Note } from '@/types/note';
 
-type Props = { tags: Note['tag'][] };
+// type Props = { tags: Note['tag'][] };
 //   tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 
-export default function TagsMenu({ tags }: Props) {
-  // export default function TagsMenu() {
+// export default function TagsMenu({ tags }: Props) {
+export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   // /////////////////////////////////////
-  // // Додаємо стан
-  // const [allTags, setAllTags] = useState<Note[]>([]);
+  // Додаємо стан
+  const [allTags, setAllTags] = useState<Note['tag'][]>([]);
 
-  // // Додаємо ефект для запиту
-  // useEffect(() => {
-  //   // Змінюємо стан
-  //   getTags().then(data => setAllTags(data));
-  // }, []);
+  // Додаємо ефект для запиту
+  useEffect(() => {
+    // Змінюємо стан
+    getTags().then(data => setAllTags(data));
+  }, []);
   ///////////////////////////
   return (
     <div className={css.menuContainer}>
@@ -42,7 +42,7 @@ export default function TagsMenu({ tags }: Props) {
               All notes
             </Link>
           </li>
-          {tags.map(tag => (
+          {allTags.map(tag => (
             <li key={tag} className={css.menuItem}>
               <Link
                 href={`/notes/filter/${tag}`}

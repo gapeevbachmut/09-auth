@@ -7,10 +7,13 @@ import { logErrorResponse } from '../_utils/utils';
 export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
+
     const search = request.nextUrl.searchParams.get('search') ?? '';
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
     const rawTag = request.nextUrl.searchParams.get('tag') ?? '';
     const tag = rawTag === 'All' ? '' : rawTag;
+
+    console.log('IT don`t WORK!!! - ???');
 
     const res = await api('/notes', {
       params: {
@@ -23,6 +26,9 @@ export async function GET(request: NextRequest) {
         Cookie: cookieStore.toString(),
       },
     });
+    console.log('IT don`t WORK!!! - ???');
+
+    console.log('APP/API/NOTES', res.data);
 
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
@@ -34,7 +40,10 @@ export async function GET(request: NextRequest) {
       );
     }
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -61,6 +70,9 @@ export async function POST(request: NextRequest) {
       );
     }
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

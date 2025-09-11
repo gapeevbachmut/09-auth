@@ -1,5 +1,5 @@
 import SidebarNotes from '@/components/SidebarNotes/SidebarNotes';
-import { getTags } from '@/lib/api';
+import { getTags } from '@/lib/api/clientApi';
 // import Link from 'next/link';
 
 export default async function NotesSidebar() {

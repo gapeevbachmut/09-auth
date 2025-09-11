@@ -5,7 +5,7 @@
 import css from './SignInPage.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login, LoginRequest } from '@/lib/api';
+import { login, LoginRequest } from '@/lib/api/clientApi';
 import { ApiError } from '@/app/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
 
@@ -38,22 +38,32 @@ const SignIn = () => {
     }
   };
   return (
-    <div className={css.mainContent}>
+    <main className={css.mainContent}>
       <h1 className={css.formTitle}>Sign in</h1>
+
       <form action={handleSubmit} className={css.form}>
-        <label className={css.formGroup}>
-          Email
-          <input type="email" name="email" required className={css.input} />
-        </label>
-        <label className={css.formGroup}>
-          Password
+        <div className={css.formGroup}>
+          <label htmlFor="email">Email</label>
           <input
+            id="email"
+            type="email"
+            name="email"
+            className={css.input}
+            required
+          />
+        </div>
+
+        <div className={css.formGroup}>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
             type="password"
             name="password"
-            required
             className={css.input}
+            required
           />
-        </label>
+        </div>
+
         <div className={css.actions}>
           <button type="submit" className={css.submitButton}>
             Log in
@@ -62,7 +72,33 @@ const SignIn = () => {
 
         {error && <p className={css.error}>{error}</p>}
       </form>
-    </div>
+    </main>
+
+    // <div className={css.mainContent}>
+    //   <h1 className={css.formTitle}>Sign in</h1>
+    //   <form action={handleSubmit} className={css.form}>
+    //     <label className={css.formGroup}>
+    //       Email
+    //       <input type="email" name="email" required className={css.input} />
+    //     </label>
+    //     <label className={css.formGroup}>
+    //       Password
+    //       <input
+    //         type="password"
+    //         name="password"
+    //         required
+    //         className={css.input}
+    //       />
+    //     </label>
+    //     <div className={css.actions}>
+    //       <button type="submit" className={css.submitButton}>
+    //         Log in
+    //       </button>
+    //     </div>
+
+    //     {error && <p className={css.error}>{error}</p>}
+    //   </form>
+    // </div>
   );
 };
 
