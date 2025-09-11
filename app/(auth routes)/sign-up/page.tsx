@@ -71,36 +71,6 @@ const SignUp = () => {
         {error && <p className={css.error}>{error}</p>}
       </form>
     </main>
-
-    // <div className={css.mainContent}>
-    //   <h1 className={css.formTitle}>Sign up</h1>
-    //   <form action={handleSubmit} className={css.form}>
-    //     <label className={css.formGroup}>
-    //       Username
-    //       <input type="text" name="userName" required className={css.input} />
-    //     </label>
-    //     <label className={css.formGroup}>
-    //       Email
-    //       <input type="email" name="email" required className={css.input} />
-    //     </label>
-    //     <label className={css.formGroup}>
-    //       Password
-    //       <input
-    //         type="password"
-    //         name="password"
-    //         required
-    //         className={css.input}
-    //       />
-    //     </label>
-
-    //     <div className={css.actions}>
-    //       <button type="submit" className={css.submitButton}>
-    //         Register
-    //       </button>
-    //     </div>
-    //   </form>
-    //   {error && <p className={css.error}>{error}</p>}
-    // </div>
   );
 };
 

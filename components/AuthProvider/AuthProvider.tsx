@@ -4,7 +4,7 @@
 
 import { checkSession, getMe } from '../../lib/api/clientApi';
 import { useAuthStore } from '../../lib/store/authStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -16,21 +16,32 @@ const AuthProvider = ({ children }: Props) => {
     state => state.clearIsAuthenticated
   );
 
+  const [isRefreshing, setIsRefreshing] = useState(true); //  стан перевірки
+
   useEffect(() => {
     const fetchUser = async () => {
-      // Перевіряємо сесію
-      const isAuthenticated = await checkSession();
-      if (isAuthenticated) {
-        // Якщо сесія валідна — отримуємо користувача
-        const user = await getMe();
-        if (user) setUser(user);
-      } else {
-        // Якщо сесія невалідна — чистимо стан
-        clearIsAuthenticated();
+      try {
+        // Перевіряємо сесію
+        const isAuthenticated = await checkSession();
+        if (isAuthenticated) {
+          // Якщо сесія валідна — отримуємо користувача
+          const user = await getMe();
+          if (user) setUser(user);
+        } else {
+          // Якщо сесія невалідна — чистимо стан
+          clearIsAuthenticated();
+        }
+      } finally {
+        setIsRefreshing(false); // закінчили перевірку
       }
     };
     fetchUser();
   }, [setUser, clearIsAuthenticated]);
+
+  // поки йде перевірка — нічого не малюємо
+  if (isRefreshing) {
+    return null;
+  }
 
   return children;
 };

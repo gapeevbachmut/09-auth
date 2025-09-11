@@ -1,5 +1,6 @@
 import { type Note, type CreateNoteType } from '@/types/note';
 import { nextServer } from './api';
+import { type User } from '@/types/user';
 
 export interface NotesResponse {
   notes: Note[];
@@ -7,47 +8,27 @@ export interface NotesResponse {
 }
 
 //  register
-
-export type RegisterRequest = {
+export type LogRequest = {
   email: string;
   password: string;
-  //   userName: string;
 };
 
-export type User = {
-  id: string;
-  email: string;
-  userName?: string;
-  photoUrl?: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export const register = async (data: RegisterRequest) => {
+export const register = async (data: LogRequest) => {
   const res = await nextServer.post<User>('/auth/register', data);
   return res.data;
 };
 
 //login
 
-export type LoginRequest = {
-  email: string;
-  password: string;
-};
-
-export const login = async (data: LoginRequest) => {
+export const login = async (data: LogRequest) => {
   const res = await nextServer.post<User>('/auth/login', data);
   return res.data;
 };
 
 //перевірка сессії
 
-type CheckSessionRequest = {
-  success: boolean;
-};
-
 export const checkSession = async () => {
-  const res = await nextServer.get<CheckSessionRequest>('/auth/session');
+  const res = await nextServer.get<{ success: boolean }>('/auth/session');
   return res.data.success;
 };
 
@@ -58,14 +39,22 @@ export const getMe = async () => {
   return data;
 };
 
+// edit profile
+
+export const updateMe = async (data: { userName?: string }) => {
+  const res = await nextServer.patch<User>('/users/me', data);
+  return res.data;
+};
+
 // logout
 
 export const logout = async (): Promise<void> => {
   await nextServer.post('/auth/logout');
 };
 
-// запит на нотатки
+//////////////////////////////////////
 
+// запит на нотатки
 export async function fetchNotes(
   search: string,
   page: number,
@@ -82,7 +71,6 @@ export async function fetchNotes(
     // headers: {
     //   // accept: 'application/json',
     //   Authorization: `Bearer ${myKey}`,
-    //   //   ????????????????
     // },
   };
   const responce = await nextServer.get<NotesResponse>(`/notes`, config);

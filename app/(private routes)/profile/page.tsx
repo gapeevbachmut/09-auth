@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import css from './ProfilePage.module.css';
+import { getServerMe } from '@/lib/api/serverApi';
+
 // import { Metadata } from 'next';
-// import { type User } from '@/lib/api';
-// import Image from 'next/image';
+// import { type User } from '@/types/user';
+import Image from 'next/image';
 
 // type ProfileProps = { params: Promise<{ profile: User }> };
 
@@ -15,13 +17,11 @@ import css from './ProfilePage.module.css';
 //   // const profile = user: User;
 
 //   return {
-//     title: `User name: ${profile.userName}`,
+//     title: `User - ${profile.userName}`,
 //     description: `Page of profile ${profile.userName}`,
 //     openGraph: {
-//       title: `User name: ${profile.userName}`,
+//       title: `User - ${profile.userName}`,
 //       description: `Page of profile ${profile.userName}`,
-//       ///////////////////////////////////////////////////////  URL???
-//       // url: `https://........./${profile.userName}`,
 //       url: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
 //       siteName: 'NoteHub',
 //       images: [
@@ -37,7 +37,9 @@ import css from './ProfilePage.module.css';
 //   };
 // }
 
-const Profile = () => {
+const Profile = async () => {
+  const user = await getServerMe();
+
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
@@ -48,18 +50,17 @@ const Profile = () => {
           </Link>
         </div>
         <div className={css.avatarWrapper}>
-          {/* <Image
-            src="Avatar"
+          <Image
+            src="https://ac.goit.global/fullstack/react/default-avatar.jpg"
             alt="User Avatar"
             width={120}
             height={120}
             className={css.avatar}
-          /> */}
+          />
         </div>
         <div className={css.profileInfo}>
-          {/* //////////////////////////////   name  and Email */}
-          <p>Username: {}</p>
-          <p>Email: {}</p>
+          <p>Username: {user.userName}</p>
+          <p>Email: {user.email}</p>
         </div>
       </div>
     </main>

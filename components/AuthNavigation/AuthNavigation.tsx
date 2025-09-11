@@ -31,6 +31,7 @@ const AuthNavigation = () => {
 
   // Якщо є сесія - відображаємо Logout та інформацію про користувача
   // інакше - посилання на логін та реєстрацію
+
   return isAuthenticated ? (
     <>
       <li className={css.navigationItem}>

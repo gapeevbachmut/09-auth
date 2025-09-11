@@ -2,15 +2,10 @@
 
 import css from './TagsMenu.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getTags } from '@/lib/api/clientApi';
 import { type Note } from '@/types/note';
 
-// type Props = { tags: Note['tag'][] };
-//   tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
-
-// export default function TagsMenu({ tags }: Props) {
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -31,8 +26,6 @@ export default function TagsMenu() {
       </button>
       {isOpen && (
         <ul className={css.menuList}>
-          {/* список тегів */}
-          {/* tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping'; */}
           <li className={css.menuItem}>
             <Link
               href={`/notes/filter/all`}
