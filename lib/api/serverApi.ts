@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { nextServer } from './api';
 import { type Note } from '@/types/note';
 import { NotesResponse } from './clientApi';
+import { User } from '@/types/user';
 
 //
 //  ЗАВЖДИ при запиті із серверного компонента
@@ -25,7 +26,7 @@ export const checkServerSession = async () => {
 
 //  отримання даних користувача.
 
-export const getMeServer = async () => {
+export const getMeServer = async (): Promise<User> => {
   const cookieStore = await cookies();
   const { data } = await nextServer.get('/users/me', {
     headers: {
