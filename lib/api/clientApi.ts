@@ -36,13 +36,22 @@ export const checkSession = async () => {
 
 export const getMe = async () => {
   const { data } = await nextServer.get<User>('/users/me');
+
   return data;
 };
 
 // edit profile
 
-export const updateMe = async (data: { userName?: string }): Promise<User> => {
-  const res = await nextServer.patch<User>('/users/me', data);
+// export const updateMe = async (data: { userName?: string }): Promise<User> => {
+//   const res = await nextServer.patch<User>('/users/me', data);
+//   return res.data;
+// };
+type UpdateMeRequest = {
+  username?: User['username'];
+};
+
+export const updateMe = async (data: UpdateMeRequest): Promise<User> => {
+  const res = await nextServer.patch<User>('users/me', data);
   return res.data;
 };
 

@@ -4,19 +4,22 @@
 
 import css from './EditProfilePage.module.css';
 import { getMe, updateMe } from '@/lib/api/clientApi';
-import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/lib/store/authStore';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const EditProfile = () => {
-  const [userName, setUserName] = useState('');
+  const router = useRouter();
+
+  const [username, setUserName] = useState('');
 
   const user = useAuthStore(state => state.user);
 
   useEffect(() => {
     getMe().then(user => {
-      setUserName(user.userName ?? '');
+      setUserName(user.username ?? '');
     });
   }, []);
 
@@ -27,7 +30,9 @@ const EditProfile = () => {
   const handleSaveUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await updateMe({ userName });
+      await updateMe({ username });
+      // перенаправити на профіль
+      router.push('/profile');
     } catch (error) {
       console.error('Oops, some error:', error);
     }
@@ -53,11 +58,10 @@ const EditProfile = () => {
             <input
               id="username"
               type="text"
-              name="name"
               className={css.input}
-              value={userName}
+              // value={username}
               onChange={handleChange}
-              defaultValue={user?.userName}
+              defaultValue={username}
             />
           </div>
 

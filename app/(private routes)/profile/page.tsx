@@ -13,6 +13,7 @@ import Image from 'next/image';
 // export async function generateMetadata({
 //   params,
 // }: ProfileProps): Promise<Metadata> {
+
 //   const { profile } = await params;
 //   // const profile = user: User;
 
@@ -39,6 +40,7 @@ import Image from 'next/image';
 
 const Profile = async () => {
   const user = await getMeServer();
+  // const userMe = await useAuthStore(state => state.user);
 
   return (
     <main className={css.mainContent}>
@@ -60,7 +62,7 @@ const Profile = async () => {
           />
         </div>
         <div className={css.profileInfo}>
-          <p>Username: {user.userName}</p>
+          <p>Username: {user?.username}</p>
           <p>Email: {user.email}</p>
         </div>
       </div>
