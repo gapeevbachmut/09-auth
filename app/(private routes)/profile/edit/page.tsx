@@ -44,6 +44,7 @@ const EditProfile = () => {
           width={120}
           height={120}
           className={css.avatar}
+          priority
         />
 
         <form className={css.profileInfo} onSubmit={handleSaveUser}>
@@ -52,6 +53,7 @@ const EditProfile = () => {
             <input
               id="username"
               type="text"
+              name="name"
               className={css.input}
               value={userName}
               onChange={handleChange}

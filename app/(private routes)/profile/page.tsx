@@ -56,6 +56,7 @@ const Profile = async () => {
             width={120}
             height={120}
             className={css.avatar}
+            priority
           />
         </div>
         <div className={css.profileInfo}>

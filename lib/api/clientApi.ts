@@ -41,7 +41,7 @@ export const getMe = async () => {
 
 // edit profile
 
-export const updateMe = async (data: { userName?: string }) => {
+export const updateMe = async (data: { userName?: string }): Promise<User> => {
   const res = await nextServer.patch<User>('/users/me', data);
   return res.data;
 };
