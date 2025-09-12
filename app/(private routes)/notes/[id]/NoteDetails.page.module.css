@@ -12,7 +12,7 @@
     flex-direction: column;
     gap: 16px;
     border-radius: 8px;
-    background-image: url(../../../public/fon_note.png);
+    background-image: url(../../../../public/fon_note.png);
     background-size: cover;
 }
 

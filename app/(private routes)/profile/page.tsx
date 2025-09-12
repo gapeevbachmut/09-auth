@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'User Profile',
     description:
       'Viewing and manage your notes and personal information on your profile.',
-    url: 'https://vercel',
+    url: 'https://https://09-auth-mocha-phi.vercel.app',
     siteName: 'NoteHub',
     images: [
       {
