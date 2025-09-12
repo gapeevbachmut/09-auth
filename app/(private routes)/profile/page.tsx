@@ -3,44 +3,34 @@
 import Link from 'next/link';
 import css from './ProfilePage.module.css';
 import { getMeServer } from '@/lib/api/serverApi';
-
-// import { Metadata } from 'next';
-// import { type User } from '@/types/user';
+import { Metadata } from 'next';
 import Image from 'next/image';
 
-// type ProfileProps = { params: Promise<{ profile: User }> };
+export const metadata: Metadata = {
+  title: 'User Profile',
+  description:
+    'Viewing and manage your notes and personal information on your profile.',
 
-// export async function generateMetadata({
-//   params,
-// }: ProfileProps): Promise<Metadata> {
-
-//   const { profile } = await params;
-//   // const profile = user: User;
-
-//   return {
-//     title: `User - ${profile.userName}`,
-//     description: `Page of profile ${profile.userName}`,
-//     openGraph: {
-//       title: `User - ${profile.userName}`,
-//       description: `Page of profile ${profile.userName}`,
-//       url: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
-//       siteName: 'NoteHub',
-//       images: [
-//         {
-//           url: '',
-//           width: 1200,
-//           height: 630,
-//           alt: 'image',
-//         },
-//       ],
-//       type: 'article',
-//     },
-//   };
-// }
+  openGraph: {
+    title: 'User Profile',
+    description:
+      'Viewing and manage your notes and personal information on your profile.',
+    url: 'https://vercel',
+    siteName: 'NoteHub',
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'image',
+      },
+    ],
+    type: 'profile',
+  },
+};
 
 const Profile = async () => {
   const user = await getMeServer();
-  // const userMe = await useAuthStore(state => state.user);
 
   return (
     <main className={css.mainContent}>

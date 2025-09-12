@@ -13,8 +13,6 @@ export async function GET(request: NextRequest) {
     const rawTag = request.nextUrl.searchParams.get('tag') ?? '';
     const tag = rawTag === 'All' ? '' : rawTag;
 
-    console.log('IT don`t WORK!!! - ???');
-
     const res = await api('/notes', {
       params: {
         ...(search !== '' && { search }),
@@ -26,9 +24,6 @@ export async function GET(request: NextRequest) {
         Cookie: cookieStore.toString(),
       },
     });
-    console.log('IT don`t WORK!!! - ???');
-
-    console.log('APP/API/NOTES', res.data);
 
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
