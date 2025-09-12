@@ -5,7 +5,7 @@
 import css from './SignInPage.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login, LoginRequest } from '@/lib/api/clientApi';
+import { login, type LogRequest } from '@/lib/api/clientApi';
 import { ApiError } from '@/app/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
 
@@ -18,7 +18,7 @@ const SignIn = () => {
   const handleSubmit = async (formData: FormData) => {
     try {
       // Типізуємо дані форми
-      const formValues = Object.fromEntries(formData) as LoginRequest;
+      const formValues = Object.fromEntries(formData) as LogRequest;
       // Виконуємо запит
       const res = await login(formValues);
       // Виконуємо редірект або відображаємо помилку

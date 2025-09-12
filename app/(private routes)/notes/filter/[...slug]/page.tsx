@@ -6,7 +6,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { fetchNotes } from '@/lib/api/clientApi';
+import { fetchNotesServer } from '@/lib/api/serverApi';
 import { type Note } from '@/types/note';
 import { type Metadata } from 'next';
 
@@ -51,7 +51,7 @@ const NotesByTag = async ({ params }: Props) => {
     // треба розібратися з параметрами функції та ключів
     queryKey: ['notes', { search: '', page: 1, tag }],
 
-    queryFn: () => fetchNotes('', 1, perPage, tag),
+    queryFn: () => fetchNotesServer('', 1, perPage, tag),
   });
 
   return (

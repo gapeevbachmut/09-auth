@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { register, RegisterRequest } from '@/lib/api/clientApi';
+import { register, type LogRequest } from '@/lib/api/clientApi';
 import { ApiError } from '@/app/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './SignUpPage.module.css';
@@ -17,7 +17,7 @@ const SignUp = () => {
   const handleSubmit = async (formData: FormData) => {
     try {
       // Типізуємо дані форми
-      const formValues = Object.fromEntries(formData) as RegisterRequest;
+      const formValues = Object.fromEntries(formData) as LogRequest;
       // Виконуємо запит
       const res = await register(formValues);
       // Виконуємо редірект або відображаємо помилку

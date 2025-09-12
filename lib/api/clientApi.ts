@@ -69,7 +69,7 @@ export async function fetchNotes(
       tag,
     },
     // headers: {
-    //   // accept: 'application/json',
+    //   accept: 'application/json',
     //   Authorization: `Bearer ${myKey}`,
     // },
   };
@@ -81,10 +81,10 @@ export async function fetchNotes(
 
 export const fetchNoteById = async (id: Note['id']): Promise<Note> => {
   const responce = await nextServer.get<Note>(`/notes/${id}`, {
-    headers: {
-      accept: 'application/json',
-      // Authorization: `Bearer ${myKey}`,
-    },
+    // headers: {
+    // accept: 'application/json',
+    // Authorization: `Bearer ${myKey}`,
+    // },
   });
   return responce.data;
 };
@@ -93,10 +93,10 @@ export const fetchNoteById = async (id: Note['id']): Promise<Note> => {
 
 export async function deleteNote(id: Note['id']): Promise<Note> {
   const responce = await nextServer.delete<Note>(`/notes/${id}`, {
-    headers: {
-      accept: 'application/json',
-      // Authorization: `Bearer ${myKey}`,
-    },
+    // headers: {
+    //   accept: 'application/json',
+    //   Authorization: `Bearer ${myKey}`,
+    // },
   });
   return responce.data;
 }
@@ -105,10 +105,10 @@ export async function deleteNote(id: Note['id']): Promise<Note> {
 
 export async function createNote(noteData: CreateNoteType): Promise<Note> {
   const responce = await nextServer.post<Note>(`/notes`, noteData, {
-    headers: {
-      accept: 'application/json',
-      // Authorization: `Bearer ${myKey}`,
-    },
+    // headers: {
+    //   accept: 'application/json',
+    //   Authorization: `Bearer ${myKey}`,
+    // },
   });
   return responce.data;
 }

@@ -2,18 +2,13 @@
 
 import { cookies } from 'next/headers';
 import { nextServer } from './api';
-import { User } from '@/types/user';
-// import { type Note, type CreateNoteType } from '@/types/note';
+import { type Note } from '@/types/note';
+import { NotesResponse } from './clientApi';
 
 //
 //  ЗАВЖДИ при запиті із серверного компонента
 //  додаємо кукі
 //
-
-// export interface NotesResponse {
-//   notes: Note[];
-//   totalPages: number;
-// }
 
 export const checkServerSession = async () => {
   // Дістаємо поточні cookie
@@ -30,7 +25,7 @@ export const checkServerSession = async () => {
 
 //  отримання даних користувача.
 
-export const getServerMe = async (): Promise<User> => {
+export const getMeServer = async () => {
   const cookieStore = await cookies();
   const { data } = await nextServer.get('/users/me', {
     headers: {
@@ -40,82 +35,42 @@ export const getServerMe = async (): Promise<User> => {
   return data;
 };
 
-// export const getNotes = async () => {
-//   const cookieStore = await cookies();
+export const fetchNoteByIdServer = async (id: string): Promise<Note> => {
+  const cookieStore = await cookies();
 
-//   const res = await nextServer.get('/notes', {
-//     headers: {
-//       Cookie: cookieStore.toString(),
-//     },
-//   });
+  const responce = await nextServer.get(`/notes/${id}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  return responce.data;
+};
 
-//   return res;
-// };
+export async function fetchNotesServer(
+  search: string,
+  page: number,
+  perPage: number,
+  tag?: Note['tag']
+): Promise<NotesResponse> {
+  const cookieStore = await cookies();
+  const config = {
+    params: {
+      search,
+      page,
+      perPage,
+      tag,
+    },
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  };
+  const responce = await nextServer.get(`/notes`, config);
+  return responce.data;
+}
 
-//////////////////////////////////////////////////////////////////
+// список тегів for sidebar
 
-// // запит на нотатки
-// export async function fetchNotes(
-//   search: string,
-//   page: number,
-//   perPage: number,
-//   tag?: Note['tag']
-// ): Promise<NotesResponse> {
-//   const config = {
-//     params: {
-//       search, // пошук - // ...(search !== '' && { q: search }),
-//       page, // сторінка
-//       perPage, // кількість на сторінці
-//       tag,
-//     },
-//     // headers: {
-//     //   // accept: 'application/json',
-//     //   Authorization: `Bearer ${myKey}`,
-//     // },
-//   };
-//   const responce = await nextServer.get<NotesResponse>(`/notes`, config);
-//   return responce.data;
-// }
-
-// //  одна нотатка
-
-// export const fetchNoteById = async (id: Note['id']): Promise<Note> => {
-//   const responce = await nextServer.get<Note>(`/notes/${id}`, {
-//     headers: {
-//       accept: 'application/json',
-//       // Authorization: `Bearer ${myKey}`,
-//     },
-//   });
-//   return responce.data;
-// };
-
-// //  видалення
-
-// export async function deleteNote(id: Note['id']): Promise<Note> {
-//   const responce = await nextServer.delete<Note>(`/notes/${id}`, {
-//     headers: {
-//       accept: 'application/json',
-//       // Authorization: `Bearer ${myKey}`,
-//     },
-//   });
-//   return responce.data;
-// }
-
-// //  додавання
-
-// export async function createNote(noteData: CreateNoteType): Promise<Note> {
-//   const responce = await nextServer.post<Note>(`/notes`, noteData, {
-//     headers: {
-//       accept: 'application/json',
-//       // Authorization: `Bearer ${myKey}`,
-//     },
-//   });
-//   return responce.data;
-// }
-
-// // список тегів for sidebar
-
-// export async function getTags(): Promise<Note['tag'][]> {
-//   // Теги фіксовані, тому просто повертаю масив
-//   return ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
-// }
+export async function getTagsServer(): Promise<Note['tag'][]> {
+  // Теги фіксовані, тому просто повертаю масив
+  return ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
+}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import css from './ProfilePage.module.css';
-import { getServerMe } from '@/lib/api/serverApi';
+import { getMeServer } from '@/lib/api/serverApi';
 
 // import { Metadata } from 'next';
 // import { type User } from '@/types/user';
@@ -38,7 +38,7 @@ import Image from 'next/image';
 // }
 
 const Profile = async () => {
-  const user = await getServerMe();
+  const user = await getMeServer();
 
   return (
     <main className={css.mainContent}>
