@@ -1,30 +1,18 @@
-// lib/api/serverApi.ts
-
 import { cookies } from 'next/headers';
 import { nextServer } from './api';
 import { type Note } from '@/types/note';
-import { NotesResponse } from './clientApi';
+import { type NotesResponse } from './clientApi';
 import { User } from '@/types/user';
 
-//
-//  ЗАВЖДИ при запиті із серверного компонента
-//  додаємо кукі
-//
-
 export const checkServerSession = async () => {
-  // Дістаємо поточні cookie
   const cookieStore = await cookies();
   const res = await nextServer.get('/auth/session', {
     headers: {
-      // передаємо кукі
       Cookie: cookieStore.toString(),
     },
   });
-  // Повертаємо повний респонс, щоб middleware мав доступ до нових cookie
   return res;
 };
-
-//  отримання даних користувача.
 
 export const getMeServer = async (): Promise<User> => {
   const cookieStore = await cookies();
@@ -69,9 +57,27 @@ export async function fetchNotesServer(
   return responce.data;
 }
 
-// список тегів for sidebar
-
 export async function getTagsServer(): Promise<Note['tag'][]> {
-  // Теги фіксовані, тому просто повертаю масив
-  return ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
+  const cookieStore = await cookies();
+
+  const res = await nextServer.get<NotesResponse>('/notes', {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+
+  const notes = res.data.notes;
+  const tags = notes.map(note => note.tag);
+  const uniqueTags = Array.from(new Set(tags));
+  const baseTags: Note['tag'][] = [
+    'Todo',
+    'Work',
+    'Personal',
+    'Meeting',
+    'Shopping',
+  ];
+
+  const merged = Array.from(new Set([...baseTags, ...uniqueTags]));
+
+  return merged;
 }
