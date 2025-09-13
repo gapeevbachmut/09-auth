@@ -23,8 +23,6 @@ const NotePreview = () => {
 
   const router = useRouter();
 
-  // const close = () => router.back();
-
   if (isLoading) return <p>Loading, please wait.....</p>;
 
   if (error || !note) return <p>Something went wrong.</p>;
@@ -32,8 +30,6 @@ const NotePreview = () => {
   const formattedDate = note.updatedAt
     ? `Updated at: ${note.updatedAt}`
     : `Created at: ${note.createdAt}`;
-
-  // await new Promise(r => setTimeout(r, 15000));
 
   return (
     <Modal onClose={() => router.back()}>

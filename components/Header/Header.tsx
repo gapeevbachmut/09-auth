@@ -16,9 +16,7 @@ const Header = async () => {
           </li>
           <AuthNavigation />
           <li>
-            <TagsMenu
-            // tags={['Todo', 'Work', 'Personal', 'Meeting', 'Shopping']}
-            />
+            <TagsMenu />
           </li>
         </ul>
       </nav>

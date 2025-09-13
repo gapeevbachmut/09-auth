@@ -4,7 +4,7 @@ import css from './Pagination.module.css';
 import ReactPaginate from 'react-paginate';
 
 interface PaginationProps {
-  pageCount: number; //total page
+  pageCount: number;
   currentPage: number;
   onPageChange: (selectedItem: { selected: number }) => void;
 }

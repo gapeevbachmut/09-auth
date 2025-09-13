@@ -1,5 +1,3 @@
-// app/profile/page.tsx
-
 import Link from 'next/link';
 import css from './ProfilePage.module.css';
 import { getMeServer } from '@/lib/api/serverApi';

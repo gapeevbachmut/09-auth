@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import { useNoteDraftStore } from '@/lib/store/noteStore';
 
-//  валідація форми
 const NoteSchema = Yup.object().shape({
   title: Yup.string()
     .required('Введіть назву нотатки!')
@@ -42,7 +41,6 @@ export default function NoteForm() {
     },
   });
 
-  //  Обробка input
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -55,16 +53,11 @@ export default function NoteForm() {
     });
   };
 
-  //  Сабміт з Yup-валідацією
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await NoteSchema.validate(draft);
       await mutation.mutateAsync(draft);
-      /////////////////////////////////
-      // mutation.mutate(draft);
-      ///////////////////////////
     } catch {
       toast.error('Не вдалося створити нотатку!');
     }

@@ -33,8 +33,9 @@ export const getMe = async () => {
   return data;
 };
 
-type UpdateMeRequest = {
+export type UpdateMeRequest = {
   username?: User['username'];
+  email?: string;
 };
 
 export const updateMe = async (data: UpdateMeRequest): Promise<User> => {

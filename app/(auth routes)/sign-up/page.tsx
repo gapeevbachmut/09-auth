@@ -1,4 +1,3 @@
-// sign - up / page.tsx;
 'use client';
 
 import { useState } from 'react';
@@ -11,18 +10,13 @@ import css from './SignUpPage.module.css';
 const SignUp = () => {
   const router = useRouter();
   const [error, setError] = useState('');
-  // Отримуємо метод із стора
   const setUser = useAuthStore(state => state.setUser);
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      // Типізуємо дані форми
       const formValues = Object.fromEntries(formData) as LogRequest;
-      // Виконуємо запит
       const res = await register(formValues);
-      // Виконуємо редірект або відображаємо помилку
       if (res) {
-        // Записуємо користувача у глобальний стан
         setUser(res);
         router.push('/profile');
       } else {

@@ -1,41 +1,53 @@
-// app/profile/edit/page.tsx
-
 'use client';
 
 import css from './EditProfilePage.module.css';
-import { getMe, updateMe } from '@/lib/api/clientApi';
+import { getMe, updateMe, type UpdateMeRequest } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
 
 const EditProfile = () => {
   const router = useRouter();
 
-  const [username, setUserName] = useState('');
+  const [username, setUsername] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const user = useAuthStore(state => state.user);
+  const setUser = useAuthStore(state => state.setUser);
 
   useEffect(() => {
-    getMe().then(user => {
-      setUserName(user.username ?? '');
-    });
-  }, []);
+    if (user) {
+      setUsername(user.username ?? '');
+    } else {
+      getMe().then(fetchedUser => {
+        setUsername(fetchedUser.username ?? '');
+        setUser(fetchedUser);
+      });
+    }
+  }, [user, setUser]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
-  };
-
-  const handleSaveUser = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
-      await updateMe({ username });
-      // перенаправити на профіль
-      router.push('/profile');
+      const updatedData: UpdateMeRequest = { username };
+      const updatedUser = await updateMe(updatedData);
+      setUser(updatedUser);
+      router.back();
     } catch (error) {
       console.error('Oops, some error:', error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const goBack = () => {
+    router.back();
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
   };
 
   return (
@@ -57,23 +69,27 @@ const EditProfile = () => {
             <label htmlFor="username">Username:</label>
             <input
               id="username"
+              name="username"
               type="text"
               className={css.input}
-              // value={username}
+              value={username}
               onChange={handleChange}
-              defaultValue={username}
             />
           </div>
 
           <p>Email: {user?.email}</p>
 
           <div className={css.actions}>
-            <button type="submit" className={css.saveButton}>
-              Save
+            <button
+              type="submit"
+              className={css.saveButton}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Saving...' : 'Save'}
             </button>
-            <Link className={css.cancelButton} href="/profile" prefetch={false}>
+            <button className={css.cancelButton} type="button" onClick={goBack}>
               Cancel
-            </Link>
+            </button>
           </div>
         </form>
       </div>

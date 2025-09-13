@@ -1,5 +1,3 @@
-// app/lib/stores/noteStore.ts
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { type CreateNoteType } from '@/types/note';
@@ -10,7 +8,6 @@ type NoteDraftStore = {
   clearDraft: () => void;
 };
 
-//  початковий стан
 const initialDraft: CreateNoteType = {
   title: '',
   content: '',

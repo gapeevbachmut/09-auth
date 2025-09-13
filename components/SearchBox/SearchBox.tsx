@@ -15,8 +15,6 @@ export default function SearchBox({ onChange }: SearchBoxProps) {
     onChange(value);
   };
 
-  // console.log(inputValue);
-
   return (
     <input
       className={css.input}

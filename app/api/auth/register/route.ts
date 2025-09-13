@@ -6,8 +6,9 @@ import { isAxiosError } from 'axios';
 import { logErrorResponse } from '../../_utils/utils';
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
   try {
+    const body = await req.json();
+
     const apiRes = await api.post('auth/register', body);
 
     const cookieStore = await cookies();
@@ -28,7 +29,6 @@ export async function POST(req: NextRequest) {
         if (parsed.refreshToken)
           cookieStore.set('refreshToken', parsed.refreshToken, options);
       }
-
       return NextResponse.json(apiRes.data, { status: apiRes.status });
     }
 

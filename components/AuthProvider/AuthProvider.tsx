@@ -1,5 +1,3 @@
-// components/AuthProvider/AuthProvider.tsx
-
 'use client';
 
 import { checkSession, getMe } from '../../lib/api/clientApi';
@@ -16,29 +14,25 @@ const AuthProvider = ({ children }: Props) => {
     state => state.clearIsAuthenticated
   );
 
-  const [isRefreshing, setIsRefreshing] = useState(true); //  стан перевірки
+  const [isRefreshing, setIsRefreshing] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // Перевіряємо сесію
         const isAuthenticated = await checkSession();
         if (isAuthenticated) {
-          // Якщо сесія валідна — отримуємо користувача
           const user = await getMe();
           if (user) setUser(user);
         } else {
-          // Якщо сесія невалідна — чистимо стан
           clearIsAuthenticated();
         }
       } finally {
-        setIsRefreshing(false); // закінчили перевірку
+        setIsRefreshing(false);
       }
     };
     fetchUser();
   }, [setUser, clearIsAuthenticated]);
 
-  // поки йде перевірка — нічого не малюємо
   if (isRefreshing) {
     return null;
   }

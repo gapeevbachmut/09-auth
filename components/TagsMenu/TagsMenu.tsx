@@ -9,16 +9,12 @@ import { type Note } from '@/types/note';
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  // /////////////////////////////////////
-  // Додаємо стан
   const [allTags, setAllTags] = useState<Note['tag'][]>([]);
 
-  // Додаємо ефект для запиту
   useEffect(() => {
-    // Змінюємо стан
     getTags().then(data => setAllTags(data));
   }, []);
-  ///////////////////////////
+
   return (
     <div className={css.menuContainer}>
       <button className={css.menuButton} onClick={toggle}>
